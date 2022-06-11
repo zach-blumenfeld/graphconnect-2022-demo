@@ -1,4 +1,4 @@
-from typing import Any, Dict, Iterable, Union, Tuple
+from typing import Any, Dict, Iterable, Union, Tuple, List
 from enum import Enum
 import json
 
@@ -196,13 +196,13 @@ class Neo4jArrowClient():
         for chunk, _ in result:
             yield chunk
 
-    def read_nodes(self, prop: str):
+    def read_nodes(self, props: List[str]):
         ticket = {
             "graph_name": self.graph, "database_name": self.database,
-            "procedure_name": "gds.graph.streamNodeProperty",
-            "configuration": { 
-                "node_labels": "*", 
-                "node_property": prop,
+            "procedure_name": "gds.graph.streamNodeProperties",
+            "configuration": {
+                "node_labels": "*",
+                "node_properties": props,
             },
             "concurrency": 224,
         }
