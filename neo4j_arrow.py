@@ -196,12 +196,12 @@ class Neo4jArrowClient():
         for chunk, _ in result:
             yield chunk
 
-    def read_nodes(self, props: List[str]):
+    def read_nodes(self, props: List[str], labels="*"):
         ticket = {
             "graph_name": self.graph, "database_name": self.database,
             "procedure_name": "gds.graph.streamNodeProperties",
             "configuration": {
-                "node_labels": "*",
+                "node_labels": labels,
                 "node_properties": props,
             },
             "concurrency": 224,
